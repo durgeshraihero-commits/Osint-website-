@@ -1,0 +1,36 @@
+# DarkBoxes Web Platform - Backend Requirements
+
+# FastAPI and web server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Database
+motor==3.3.2  # Async MongoDB driver
+pymongo==4.6.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+pyjwt==2.8.0
+google-auth==2.25.2
+cryptography==41.0.7
+
+# HTTP Client
+httpx==0.25.2
+
+# Payment Integration
+razorpay==1.4.1  # Indian payment gateway
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Data validation
+pydantic==2.5.0
+email-validator==2.1.0
+
+# CORS
+python-cors==1.0.0
+
+# Utilities
+python-dateutil==2.8.2

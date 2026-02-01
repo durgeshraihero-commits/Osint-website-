@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | DarkBoxes Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a26;
+            --accent-primary: #00ff88;
+            --accent-secondary: #00ccff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --border-color: rgba(0, 255, 136, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 5%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 0 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .endpoint {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 1rem;
+        }
+
+        .method-post { background: rgba(0, 255, 136, 0.2); color: var(--accent-primary); }
+        .method-get { background: rgba(0, 204, 255, 0.2); color: var(--accent-secondary); }
+        .method-delete { background: rgba(255, 0, 102, 0.2); color: #ff0066; }
+
+        .endpoint-path {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+        }
+
+        .description {
+            margin: 1rem 0;
+            color: var(--text-secondary);
+        }
+
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-primary);
+        }
+
+        .param-table {
+            width: 100%;
+            margin: 1rem 0;
+            border-collapse: collapse;
+        }
+
+        .param-table th,
+        .param-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .param-table th {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .param-table td {
+            color: var(--text-secondary);
+        }
+
+        .param-name {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-primary);
+        }
+
+        .required {
+            color: #ff0066;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--accent-primary);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        
+        <h1>API Documentation</h1>
+        <p class="intro">
+            Complete reference for the DarkBoxes Intelligence API. Use these endpoints to integrate 
+            advanced intelligence gathering into your applications.
+        </p>
+
+        <h2>Authentication</h2>
+        <p class="description">
+            All API requests require authentication using Bearer tokens obtained from Google OAuth login.
+        </p>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-post">POST</span>
+                <span class="endpoint-path">/auth/google</span>
+            </div>
+            <p class="description">Authenticate user with Google OAuth token</p>
+            
+            <h3>Request Body</h3>
+            <div class="code-block">
+                <pre>{
+  "token": "google_oauth_token_here"
+}</pre>
+            </div>
+
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "access_token": "jwt_token_here",
+  "token_type": "bearer",
+  "user": {
+    "id": "user_abc123",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "credits": 250,
+    "plan": "professional"
+  }
+}</pre>
+            </div>
+        </div>
+
+        <h2>User Management</h2>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-get">GET</span>
+                <span class="endpoint-path">/user/me</span>
+            </div>
+            <p class="description">Get current user profile information</p>
+            
+            <h3>Headers</h3>
+            <table class="param-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td class="param-name">Authorization</td>
+                    <td>Bearer {access_token}</td>
+                </tr>
+            </table>
+
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "id": "user_abc123",
+  "email": "user@example.com",
+  "name": "John Doe",
+  "picture": "https://...",
+  "credits": 250,
+  "plan": "professional",
+  "created_at": "2026-01-15T10:30:00Z"
+}</pre>
+            </div>
+        </div>
+
+        <h2>API Key Management</h2>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-post">POST</span>
+                <span class="endpoint-path">/api-keys/create</span>
+            </div>
+            <p class="description">Create a new API key for your account</p>
+            
+            <h3>Request Body</h3>
+            <table class="param-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td class="param-name">name</td>
+                    <td>string</td>
+                    <td class="required">Yes</td>
+                    <td>Name for the API key</td>
+                </tr>
+                <tr>
+                    <td class="param-name">environment</td>
+                    <td>string</td>
+                    <td class="required">Yes</td>
+                    <td>production | development | staging</td>
+                </tr>
+                <tr>
+                    <td class="param-name">rate_limit</td>
+                    <td>integer</td>
+                    <td class="required">Yes</td>
+                    <td>Requests per minute (50, 100, 500)</td>
+                </tr>
+                <tr>
+                    <td class="param-name">description</td>
+                    <td>string</td>
+                    <td>No</td>
+                    <td>Optional description</td>
+                </tr>
+            </table>
+
+            <h3>Example Request</h3>
+            <div class="code-block">
+                <pre>{
+  "name": "Production API Key",
+  "environment": "production",
+  "rate_limit": 100,
+  "description": "Main API key for production use"
+}</pre>
+            </div>
+
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "success": true,
+  "api_key": "dk_live_3f8a9c2e1d4b5f7a9c2e1d4b5f7a9c2e",
+  "details": {
+    "name": "Production API Key",
+    "environment": "production",
+    "rate_limit": 100
+  }
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-get">GET</span>
+                <span class="endpoint-path">/api-keys/list</span>
+            </div>
+            <p class="description">List all your API keys</p>
+            
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "keys": [
+    {
+      "id": "key_xyz789",
+      "name": "Production Key",
+      "api_key": "dk_live_...",
+      "environment": "production",
+      "rate_limit": 100,
+      "usage_count": 142,
+      "created_at": "2026-01-15T10:30:00Z",
+      "last_used": "2026-02-01T14:20:00Z",
+      "active": true
+    }
+  ]
+}</pre>
+            </div>
+        </div>
+
+        <h2>Intelligence Search</h2>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-post">POST</span>
+                <span class="endpoint-path">/search</span>
+            </div>
+            <p class="description">Perform intelligence search across multiple data sources</p>
+            
+            <h3>Request Body</h3>
+            <table class="param-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td class="param-name">query</td>
+                    <td>string</td>
+                    <td class="required">Yes</td>
+                    <td>Search query (email, phone, username, etc.)</td>
+                </tr>
+                <tr>
+                    <td class="param-name">search_type</td>
+                    <td>string</td>
+                    <td>No</td>
+                    <td>general | email | phone | username | ip</td>
+                </tr>
+            </table>
+
+            <h3>Example Request</h3>
+            <div class="code-block">
+                <pre>{
+  "query": "john.doe@example.com",
+  "search_type": "email"
+}</pre>
+            </div>
+
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "success": true,
+  "data": {
+    "query": "john.doe@example.com",
+    "type": "email",
+    "results": [...],
+    "sources": 5,
+    "timestamp": "2026-02-01T15:30:00Z"
+  },
+  "credits_remaining": 249
+}</pre>
+            </div>
+
+            <h3>Error Response</h3>
+            <div class="code-block">
+                <pre>{
+  "detail": "Insufficient credits. Please purchase more credits to continue."
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-get">GET</span>
+                <span class="endpoint-path">/search/history</span>
+            </div>
+            <p class="description">Get your search history</p>
+            
+            <h3>Query Parameters</h3>
+            <table class="param-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td class="param-name">limit</td>
+                    <td>integer</td>
+                    <td>50</td>
+                    <td>Number of results to return</td>
+                </tr>
+            </table>
+
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "searches": [
+    {
+      "query": "john.doe@example.com",
+      "type": "email",
+      "status": "success",
+      "credits_used": 1,
+      "timestamp": "2026-02-01T15:30:00Z"
+    }
+  ]
+}</pre>
+            </div>
+        </div>
+
+        <h2>Credit Management</h2>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-post">POST</span>
+                <span class="endpoint-path">/credits/purchase</span>
+            </div>
+            <p class="description">Purchase a credit package</p>
+            
+            <h3>Request Body</h3>
+            <div class="code-block">
+                <pre>{
+  "package": "professional",
+  "payment_method": "razorpay"
+}</pre>
+            </div>
+
+            <h3>Available Packages</h3>
+            <table class="param-table">
+                <tr>
+                    <th>Package</th>
+                    <th>Credits</th>
+                    <th>Price (INR)</th>
+                </tr>
+                <tr>
+                    <td class="param-name">starter</td>
+                    <td>100</td>
+                    <td>₹499</td>
+                </tr>
+                <tr>
+                    <td class="param-name">professional</td>
+                    <td>500</td>
+                    <td>₹999</td>
+                </tr>
+                <tr>
+                    <td class="param-name">enterprise</td>
+                    <td>Unlimited</td>
+                    <td>₹2,999</td>
+                </tr>
+            </table>
+
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "order_id": "order_abc123",
+  "amount": 999,
+  "currency": "INR",
+  "package": "Professional Pack",
+  "credits": 500,
+  "razorpay_key": "rzp_...",
+  "callback_url": "/credits/verify"
+}</pre>
+            </div>
+        </div>
+
+        <h2>Statistics</h2>
+
+        <div class="endpoint">
+            <div>
+                <span class="method method-get">GET</span>
+                <span class="endpoint-path">/stats</span>
+            </div>
+            <p class="description">Get your account statistics</p>
+            
+            <h3>Response</h3>
+            <div class="code-block">
+                <pre>{
+  "credits": 250,
+  "plan": "professional",
+  "total_searches": 345,
+  "monthly_searches": 142,
+  "success_rate": 98.5,
+  "active_api_keys": 3
+}</pre>
+            </div>
+        </div>
+
+        <h2>Rate Limits</h2>
+        <p class="description">
+            API rate limits depend on your plan and API key configuration:
+        </p>
+        <ul style="color: var(--text-secondary); margin-left: 2rem; margin-bottom: 2rem;">
+            <li>Free Plan: 50 requests/minute</li>
+            <li>Starter Plan: 100 requests/minute</li>
+            <li>Professional Plan: 500 requests/minute</li>
+            <li>Enterprise Plan: Custom limits</li>
+        </ul>
+
+        <h2>Error Codes</h2>
+        <table class="param-table">
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td class="param-name">400</td>
+                <td>Bad Request - Invalid parameters</td>
+            </tr>
+            <tr>
+                <td class="param-name">401</td>
+                <td>Unauthorized - Invalid or missing token</td>
+            </tr>
+            <tr>
+                <td class="param-name">402</td>
+                <td>Payment Required - Insufficient credits</td>
+            </tr>
+            <tr>
+                <td class="param-name">404</td>
+                <td>Not Found - Resource not found</td>
+            </tr>
+            <tr>
+                <td class="param-name">429</td>
+                <td>Too Many Requests - Rate limit exceeded</td>
+            </tr>
+            <tr>
+                <td class="param-name">500</td>
+                <td>Internal Server Error</td>
+            </tr>
+        </table>
+
+        <h2>Code Examples</h2>
+
+        <h3>Python</h3>
+        <div class="code-block">
+            <pre>import requests
+
+# Authenticate
+auth_response = requests.post(
+    "https://api.darkboxes.com/auth/google",
+    json={"token": "google_oauth_token"}
+)
+token = auth_response.json()["access_token"]
+
+# Perform search
+search_response = requests.post(
+    "https://api.darkboxes.com/search",
+    headers={"Authorization": f"Bearer {token}"},
+    json={
+        "query": "john.doe@example.com",
+        "search_type": "email"
+    }
+)
+
+results = search_response.json()
+print(results)</pre>
+        </div>
+
+        <h3>JavaScript</h3>
+        <div class="code-block">
+            <pre>// Authenticate
+const authResponse = await fetch('https://api.darkboxes.com/auth/google', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({token: 'google_oauth_token'})
+});
+const {access_token} = await authResponse.json();
+
+// Perform search
+const searchResponse = await fetch('https://api.darkboxes.com/search', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${access_token}`
+    },
+    body: JSON.stringify({
+        query: 'john.doe@example.com',
+        search_type: 'email'
+    })
+});
+
+const results = await searchResponse.json();
+console.log(results);</pre>
+        </div>
+
+        <div style="margin: 4rem 0 2rem; padding: 2rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color);">
+            <h3 style="color: var(--accent-primary);">Need Help?</h3>
+            <p style="color: var(--text-secondary); margin-top: 1rem;">
+                For additional support, contact us at support@darkboxes.com or visit our support portal.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
