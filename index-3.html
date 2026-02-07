@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkBoxes Intelligence | Professional OSINT Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-canvas"></canvas>
+    
+    <!-- Legal Disclaimer Modal (Shows on first visit) -->
+    <div id="legal-modal" class="modal">
+        <div class="modal-content legal-modal">
+            <div class="modal-header">
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <h2>LEGAL DISCLAIMER & TERMS OF USE</h2>
+            </div>
+            <div class="modal-body">
+                <div class="disclaimer-content">
+                    <h3>⚠️ IMPORTANT NOTICE</h3>
+                    <p><strong>This platform is for AUTHORIZED and LEGAL use only.</strong></p>
+                    
+                    <h4>Terms and Conditions:</h4>
+                    <ul>
+                        <li>All searches are logged and may be monitored for compliance</li>
+                        <li>You must have legal authorization to search the information</li>
+                        <li>Misuse may result in account termination and legal action</li>
+                        <li>Data provided is for informational purposes only</li>
+                        <li>Users are responsible for compliance with local laws</li>
+                        <li>No warranty is provided regarding accuracy of data</li>
+                        <li>Platform operators are not liable for misuse</li>
+                    </ul>
+                    
+                    <h4>Prohibited Activities:</h4>
+                    <ul>
+                        <li>Harassment, stalking, or threatening behavior</li>
+                        <li>Identity theft or fraud</li>
+                        <li>Unauthorized access to systems or data</li>
+                        <li>Any illegal activities under local or international law</li>
+                    </ul>
+                    
+                    <div class="consent-box">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="legal-consent">
+                            <span class="checkmark"></span>
+                            <span>I have read and agree to the terms. I confirm I will use this service legally and ethically.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="accept-terms" class="btn btn-primary" disabled>
+                    <i class="fas fa-check"></i> Accept & Continue
+                </button>
+                <button id="decline-terms" class="btn btn-danger">
+                    <i class="fas fa-times"></i> Decline & Exit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Broadcast Messages -->
+    <div id="broadcast-container"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-shield-alt"></i>
+                <span>DARKBOXES</span>
+                <span class="nav-subtitle">INTELLIGENCE</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+                <a href="#search" class="nav-link"><i class="fas fa-search"></i> Search</a>
+                <a href="#plans" class="nav-link"><i class="fas fa-credit-card"></i> Plans</a>
+                <a href="#contact" class="nav-link"><i class="fas fa-paper-plane"></i> Contact</a>
+                <a href="#" class="nav-link" id="admin-nav" style="display:none;"><i class="fas fa-cog"></i> Admin</a>
+            </div>
+            <div class="nav-auth">
+                <div id="auth-buttons">
+                    <button class="btn btn-outline" id="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button class="btn btn-primary" id="register-btn">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </div>
+                <div id="user-menu" style="display:none;">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name"></span>
+                        <span class="credits-badge" id="user-credits">0 Credits</span>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="glitch-wrapper">
+                        <h1 class="glitch" data-text="DARKBOXES">DARKBOXES</h1>
+                    </div>
+                    <h2 class="hero-subtitle typing-animation">Professional OSINT Intelligence Platform</h2>
+                    <p class="hero-description">
+                        Advanced reconnaissance and intelligence gathering system.
+                        Authorized access only. All activities are monitored and logged.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-database"></i>
+                            <h3>14+</h3>
+                            <p>Search Modules</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Military</h3>
+                            <p>Grade Security</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-bolt"></i>
+                            <h3>Instant</h3>
+                            <p>Results</p>
+                        </div>
+                    </div>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-lg pulse" onclick="scrollToSection('search')">
+                            <i class="fas fa-rocket"></i> Start Searching
+                        </button>
+                        <button class="btn btn-outline btn-lg" onclick="scrollToSection('plans')">
+                            <i class="fas fa-credit-card"></i> View Plans
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                            <span class="terminal-title">darkboxes@kali:~$</span>
+                        </div>
+                        <div class="terminal-body" id="terminal-demo"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search" class="section search-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-search"></i> Intelligence Search
+                    </h2>
+                    <p class="section-subtitle">Select a search module and enter your query</p>
+                </div>
+
+                <div id="login-required" class="alert alert-warning">
+                    <i class="fas fa-lock"></i> Please login to access search functionality
+                </div>
+
+                <div id="search-interface" style="display:none;">
+                    <div class="search-grid" id="search-commands"></div>
+                    
+                    <div class="search-form" id="search-form-container" style="display:none;">
+                        <div class="form-card">
+                            <h3><i class="fas fa-terminal"></i> <span id="selected-command-name"></span></h3>
+                            <p class="command-description" id="selected-command-desc"></p>
+                            
+                            <div class="form-group">
+                                <label for="search-query">
+                                    <i class="fas fa-keyboard"></i> Enter Query
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="search-query" 
+                                    class="form-control" 
+                                    placeholder="Enter your search query..."
+                                >
+                            </div>
+                            
+                            <div class="search-actions">
+                                <button class="btn btn-primary" id="execute-search">
+                                    <i class="fas fa-play"></i> Execute Search
+                                    <span class="credit-cost"></span>
+                                </button>
+                                <button class="btn btn-secondary" id="cancel-search">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="search-results" class="results-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plans Section -->
+        <section id="plans" class="section plans-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-credit-card"></i> Credit Plans
+                    </h2>
+                    <p class="section-subtitle">Choose the perfect plan for your intelligence needs</p>
+                </div>
+
+                <div class="plans-grid" id="plans-grid"></div>
+
+                <div class="payment-info">
+                    <p><i class="fas fa-info-circle"></i> After purchase, contact admin to activate credits</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-paper-plane"></i> Contact & Support
+                    </h2>
+                    <p class="section-subtitle">Get in touch with our team</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <i class="fab fa-telegram"></i>
+                        <h3>Telegram Admin</h3>
+                        <p>For account support and credit purchases</p>
+                        <a href="https://t.me/darkboxesAdmin" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-telegram"></i> @darkboxesAdmin
+                        </a>
+                    </div>
+
+                    <div class="contact-card">
+                        <i class="fab fa-telegram"></i>
+                        <h3>Search Bot</h3>
+                        <p>Use our Telegram bot for quick searches</p>
+                        <a href="https://t.me/darkboxes_bot" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-robot"></i> @darkboxes_bot
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-sign-in-alt"></i> System Login</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="login-username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="register-username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="register-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="register-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel" style="display:none;">
+        <div class="admin-header">
+            <h2><i class="fas fa-shield-alt"></i> Admin Control Panel</h2>
+            <button class="btn btn-secondary" id="close-admin">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="users">Users</button>
+            <button class="tab-btn" data-tab="commands">Commands</button>
+            <button class="tab-btn" data-tab="plans-admin">Plans</button>
+            <button class="tab-btn" data-tab="broadcasts">Broadcasts</button>
+            <button class="tab-btn" data-tab="config">Config</button>
+            <button class="tab-btn" data-tab="logs">Logs</button>
+        </div>
+
+        <div class="admin-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="stats-grid" id="admin-stats"></div>
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="recent-activity-list"></div>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="users-tab" class="tab-content">
+                <div class="table-container" id="users-table"></div>
+            </div>
+
+            <!-- Commands Tab -->
+            <div id="commands-tab" class="tab-content">
+                <button class="btn btn-primary mb-3" id="add-command-btn">
+                    <i class="fas fa-plus"></i> Add Command
+                </button>
+                <div class="table-container" id="commands-table"></div>
+            </div>
+
+            <!-- Plans Tab -->
+            <div id="plans-admin-tab" class="tab-content">
+                <button class="btn btn-primary mb-3" id="add-plan-btn">
+                    <i class="fas fa-plus"></i> Add Plan
+                </button>
+                <div class="table-container" id="plans-table"></div>
+            </div>
+
+            <!-- Broadcasts Tab -->
+            <div id="broadcasts-tab" class="tab-content">
+                <button class="btn btn-primary mb-3" id="add-broadcast-btn">
+                    <i class="fas fa-plus"></i> Create Broadcast
+                </button>
+                <div class="table-container" id="broadcasts-table"></div>
+            </div>
+
+            <!-- Config Tab -->
+            <div id="config-tab" class="tab-content">
+                <div class="form-card">
+                    <h3>API Configuration</h3>
+                    <form id="config-form">
+                        <div class="form-group">
+                            <label>API Key</label>
+                            <input type="text" id="config-api-key" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>API URL</label>
+                            <input type="text" id="config-api-url" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Configuration
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Logs Tab -->
+            <div id="logs-tab" class="tab-content">
+                <div class="table-container" id="logs-table"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
